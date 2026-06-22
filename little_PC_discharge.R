@@ -109,5 +109,5 @@ Qflood <- 10^(m + (s * p))
 # vline(yintercept = [flood level]) + 
 
 ggplot(peak) + 
-     geom_histogram(binwidth = 5, color = 'black', aes(x = peakQ))
+     geom_histogram(binwidth = 10, color = 'black', fill = "blue", aes(x = peakQ))
 
