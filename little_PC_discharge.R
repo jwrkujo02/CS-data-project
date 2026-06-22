@@ -94,12 +94,13 @@ peak <- znew %>%
 peak <- peak %>%
      mutate(LogPeak = log(peakQ, 10))
 
+r <- 1:10
 m <- mean(peak$LogPeak)
 s <- stdev(peak$LogPeak)
 c <- skew(peak$LogPeak)
 
 Fx <- 0.99 # Starting with f(x) = .99, the !% or 100-year flood
-tR <- 10 # return period
+tR <- 2 # return period
 Fx <- 1 - (1 / tR)
 
 p <- pt3(c, Fx)
@@ -112,4 +113,27 @@ ggplot(peak) +
      geom_histogram(binwidth = 10, color = 'black', fill = "blue", aes(x = peakQ)) +
      geom_vline(xintercept = Qflood, color = "red") +
      geom_label(label=paste(tR, "year flood"), x=40, y=10)
+
+# now for more data. analyze flood level changes over ten year increments
+r <- 16:25
+m <- mean(peak$LogPeak[r])
+s <- stdev(peak$LogPeak[r])
+c <- skew(peak$LogPeak[r])
+p <- pt3(c, Fx)
+Qflood <- 10^(m + (s * p)) 
+print(peak$hydroYear[r])
+
+
+f <- read_csv("flood10year.csv")
+m1 <- lm(flood10 ~ mid, data = f)
+
+
+# analyzing days above the 2 year flood value. number of distinct floods over a value
+ex <- znew %>%
+     mutate(da = as_date(dt)) %>%
+     group_by(da) %>%
+     summarize(Qday = max(Q, na.rm = TRUE), hy = floor(mean(hydroYear))) %>%
+     group_by(hy) %>%
+     summarize(n_days = n(), daysOver5 = sum(Qday > Qflood))
+
 
