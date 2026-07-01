@@ -92,6 +92,11 @@ peak <- znew %>%
      group_by(hydroYear) %>%
      summarize(peakQ = max(Q))
 
+# NOTE: peak and znew here are loaded from csv files due to technical difficulties
+znew <- read_csv('little_pine_creek_full.csv')
+peak <- read_csv('little_pine_creek_peak.csv')
+
+
 # log of peak flow
 peak <- peak %>%
      mutate(LogPeak = log(peakQ, 10))
@@ -136,9 +141,6 @@ ggplot(ex, aes(hy, daysOver5)) +
      ylab("Days Over 5-year Flood Value")
 
 
-
-
-
 # now for more data. analyze flood level changes over ten year increments
 r <- 16:25
 m <- mean(peak$LogPeak[r])
@@ -163,7 +165,8 @@ sd <- array(NA, dim = n)
 cd <- array(NA, dim = n)
 pd <- array(NA, dim = n)
 Qd <- array(NA, dim = n)
-Fxd <- 0.9 #test 10yr flood
+tR <- 10 #return period
+Fxd <- 1 - (1/tR)
 
 for (i in 1:n) {
      beg[i] <- (5 * (i - 1)) + 1 # starting point in peak array
