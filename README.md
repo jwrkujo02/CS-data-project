@@ -40,11 +40,11 @@ significance are contained in the data table below.
 |Allegheny River   |.824    |-0.006 |.0079 |
 |Little Pine Creek |0.003   |0.038  |0.072 |
 
-![Figure 1. Little Pine Creek Peak Flow (Q).]("PeakFlowQ_LPC.eps")
+![Figure 1. Little Pine Creek Peak Flow (Q).]("PeakFlowQ_LPC.jpg")
 
 ![Figure 2. Allegheny River at Natrona Peak Flow (Q).]("Peak Flow Q Allegheny.jpeg")
 
-![Figure 3. Days over 5-year flood at LPC.]("LPC_5yearflood_days.eps")
+![Figure 3. Days over 5-year flood at LPC.]("LPC_5yearflood_days.jpg")
 
 ![Figure 4. Days over 5-year flood at Allegheny Natrona.]("Days over 5YFV Natrona.jpeg")
 
@@ -63,5 +63,10 @@ V. Citations.
 
 [1]. https://streamstats.usgs.gov/ss/?information-portal=regionalInformation&region=PA
 
+[2]. Gore, J.A., Banning, J. Chapter 3 - Discharge Measurements and Streamflow Analysis, Methods in Stream Ecology, Volume 1 (Third Edition), Academic Press, 2017, Pages 49-70,
+ISBN 9780124165588, https://doi.org/10.1016/B978-0-12-416558-8.00003-2.
+
+[3]. Gunawardana, Charitha and Walter McDonald. 2024. “Impacts of Land Use Changes on Discharge and Water Quality in Rivers and Streams: Case Study of the Continental United States.”
+JAWRA Journal of the American Water Resources Association60 (3): 725–740. https://doi.org/10.1111/1752-1688.13198.
 
 
