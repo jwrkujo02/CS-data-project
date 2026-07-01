@@ -42,15 +42,15 @@ significance are contained in the data table below.
 
 ![Figure 1. Little Pine Creek Peak Flow (Q).]("PeakFlowQ_LPC.jpg")
 
-![Figure 2. Allegheny River at Natrona Peak Flow (Q).]("Peak Flow Q Allegheny.jpeg")
+![Figure 2. Allegheny River at Natrona Peak Flow (Q).]("Peak_Flow_Q_Allegheny.jpg")
 
 ![Figure 3. Days over 5-year flood at LPC.]("LPC_5yearflood_days.jpg")
 
-![Figure 4. Days over 5-year flood at Allegheny Natrona.]("Days over 5YFV Natrona.jpeg")
+![Figure 4. Days over 5-year flood at Allegheny Natrona.]("Days_over_5YFV_Natrona.jpg")
 
-![Figure 5. Mean Flow and 10-year Flood Values for LPC.]("mQ and 10yr Flood LPC.jpeg")
+![Figure 5. Mean Flow and 10-year Flood Values for LPC.]("mQ_and_10yr_Flood_LPC.jpg")
 
-![Figure 6. Mean Flow and 10-year Flood Values for Allegheny at Natrona.]("mQ and 10-flood Allegheny.jpeg")
+![Figure 6. Mean Flow and 10-year Flood Values for Allegheny at Natrona.]("mQ_and_10-flood_Allegheny.jpg")
 
 IV. Conclusions.
 
