@@ -1,9 +1,11 @@
 # load basic libraries.
 library(readr)
 library(dplyr)
+library(tidyr)
 library(lubridate)
 library(ggplot2)
 library(doParallel)
+library(latex2exp)
 # install and load library hydrostats. specific for hydrology analysis
 install.packages("devtools")
 library(devtools)
@@ -160,11 +162,13 @@ sd <- array(NA, dim = n2)
 cd <- array(NA, dim = n2)
 pd <- array(NA, dim = n2)
 Qd <- array(NA, dim = n2)
-Fxd <- 0.9 #test 10yr flood
+tR <- 10 #return period
+Fxd <- 1 - (1/tR)
+
 
 for (i in 1:n2) {
      beg[i] <- (5 * (i - 1)) + 1 # starting point in peak array
-     end[i] <- beg + 9 # ending point
+     end[i] <- beg[i] + 9 # ending point
      if (end[i] > nrow(peak2)) {
           end[i] <- nrow(peak2) # to avoid going over
      }
@@ -178,6 +182,31 @@ for (i in 1:n2) {
      Qd[i] <- 10^(md[i] + (sd[i] * pd[i]))
 }
 
+#beginning year, end yr, duration in yrs, mean flow, mean log, 
+# stdev of the log, skewness of log, p-stat of log-PT3, tR/Fx flood level
 floods2 <- data.frame(beg, end, dur, mQ, md, sd, cd, pd, Qd)
-ggplot(floods2, aes())
+
+# analyze significance of data over time..
+# keep in mind allegheny is a highly controlled river so significance is not expected to be 
+# large
+mod <- glm(Qd~end, gaussian(link = "log"), data = floods2)
+
+#plot mean flow and ten-year flood level (mQ and Q
+
+plot(floods2$end, floods2$Qd)
+
+ggplot(floods2, aes(end, Qd)) +
+     geom_point(color = 'red') +
+     xlab('End Year') + ylab('10-Year Flood Level')
+
+flood_long2 <- floods2 %>%
+     mutate(mid = floor((beg + end) / 2)) %>%
+     select(mid, mQ, Qd) %>%
+     rename(`Mean Flow` = mQ, `10% Flood` = Qd) %>%
+     pivot_longer(c(`Mean Flow`, `10% Flood`), names_to = "Legend", values_to = "value")
+
+ggplot(flood_long2, aes(x = mid, y = value, color = Legend)) +
+     geom_line(size = 1.5) +
+     xlab('Hydrological Year') +
+     ylab(TeX('Q ($m^3/s$)'))
 

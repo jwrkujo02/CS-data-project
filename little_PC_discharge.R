@@ -167,7 +167,7 @@ Fxd <- 0.9 #test 10yr flood
 
 for (i in 1:n) {
      beg[i] <- (5 * (i - 1)) + 1 # starting point in peak array
-     end[i] <- beg + 9 # ending point
+     end[i] <- beg[i] + 9 # ending point
      if (end[i] > nrow(peak)) {
           end[i] <- nrow(peak) # to avoid going over
      }
@@ -183,5 +183,25 @@ for (i in 1:n) {
 
 floods <- data.frame(beg, end, dur, mQ, md, sd, cd, pd, Qd)
 
-# how should this data be displayed????
+mod <- glm(Qd~end, gaussian(link = "log"), data = floods)
+
+#plot mean flow and ten-year flood level (mQ and Q
+
+plot(floods$end, floods$Qd)
+
+ggplot(floods, aes(end, Qd)) +
+     geom_point(color = 'red') +
+     xlab('End Year') + ylab('10-Year Flood Level')
+
+flood_long <- floods %>%
+     mutate(mid = floor((beg + end) / 2)) %>%
+     select(mid, mQ, Qd) %>%
+     rename(`Mean Flow` = mQ, `10% Flood` = Qd) %>%
+     pivot_longer(c(`Mean Flow`, `10% Flood`), names_to = "Legend", values_to = "value")
+
+ggplot(flood_long, aes(x = mid, y = value, color = Legend)) +
+     geom_line(size = 1.5) +
+     xlab('Hydrological Year') +
+     ylab(TeX('Q ($m^3/s$)'))
+
 
