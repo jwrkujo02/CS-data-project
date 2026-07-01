@@ -24,33 +24,45 @@ Once all code was written and graphs generated, we proceeded to further examine 
 **III. Results and Discussion.**
 
 Peak flow values differ greatly between Little Pine Creek and Allegheny River at Natrona. According to our data, most years at LPC had Q values around a mean of 10 cubic meters per second 
-(Figure 1). In comparison to Allegheny River at Natrona, this location had much more variation and consistently higher Q values, with the mean localizing around 2800 cubic meters 
-per second (Figure 2). Considering that these bodies of water are fundamentally different (i.e., creek versus river), this was to be expected. 
+(**Figure 1**). In comparison to Allegheny River at Natrona, this location had much more variation and consistently higher Q values, with the mean localizing around 2800 cubic meters 
+per second (**Figure 2**). Considering that these bodies of water are fundamentally different (i.e., creek versus river), this was to be expected. 
 
-In the context of days over the 5-year flood value in both locations, the Allegheny River has significantly more days than that of Little Pine Creek (Figure 3, 4). The number of days 
+In the context of days over the 5-year flood value in both locations, the Allegheny River has significantly more days than that of Little Pine Creek (**Figure 3, 4**). The number of days 
 per year do not appear to correlate between the two locations.
 
 Lastly, our examination of mean flow and 10-year flood values per hydrological year returned interesting findings. Here, we observe that the Allegheny River has less significant 
-difference in mean flow and flooding (Figure 6). Based on the status of the river, this data is understandable-- the Allegheny is tightly controlled by local regulation in terms of flow and 
+difference in mean flow and flooding (**Figure 6**). Based on the status of the river, this data is understandable-- the Allegheny is tightly controlled by local regulation in terms of flow and 
 its ability to flood. On the contrary, Little Pine Creek is not specifically regulated to prevent flooding, hence more significant differences are found in these datasets. Reports on 
 significance are contained in the data table below.
 
-|River             |p-value |2.5%   |97.5% |
-|------------------|--------|-------|------|
-|Allegheny River   |.824    |-0.006 |.0079 |
-|Little Pine Creek |0.003   |0.038  |0.072 |
+|**River**         |**p-value**|**2.5%**   |**97.5%** |
+|------------------|-----------|-----------|----------|
+|Allegheny River   |.824       |-0.006     |.0079     |
+|Little Pine Creek |0.003      |0.038      |0.072     |
 
 ![Figure 1. Little Pine Creek Peak Flow (Q).](PeakFlowQ_LPC.jpg)  
 
+**Figure 1. Little Pine Creek Peak Flow (Q).**
+
 ![Figure 2. Allegheny River at Natrona Peak Flow (Q).](Peak_Flow_Q_Allegheny.jpg)  
+
+**Figure 2. Allegheny River at Natrona Peak Flow (Q).**
 
 ![Figure 3. Days over 5-year flood at LPC.](LPC_5yearflood_days.jpg)  
 
+**Figure 3. Days over 5-year flood at Little Pine Creek.**
+
 ![Figure 4. Days over 5-year flood at Allegheny Natrona.](Days_over_5YFV_Natrona.jpg)  
+
+**Figure 4. Days over 5-year flood at Allegheny Natrona.**
 
 ![Figure 5. Mean Flow and 10-year Flood Values for LPC.](mQ_and_10yr_Flood_LPC.jpg)  
 
+**Figure 5. Mean Flow and 10-year Flood Values for Little Pine Creek**
+
 ![Figure 6. Mean Flow and 10-year Flood Values for Allegheny at Natrona.](mQ_and_10-flood_Allegheny.jpg)  
+
+**Figure 6. Mean Flow and 10-year Flood Values for Allegheny at Natrona.**
 
 **IV. Conclusions.**
 
