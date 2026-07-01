@@ -1,11 +1,11 @@
-I.	Introduction.
+**I.	Introduction.**
 
 The purpose of this data project was to analyze flow data from two different locations in Pittsburgh, PA, specifically Little Pine Creek and the Allegheny River at Natrona. 
 Using publicly available data from https://streamstats.usgs.gov/ss/ , we queried for discharge data spanning back nearly three decades in each location. These data were analyzed
 using R scripts contained within this repository where we have generated summary statistics for flow data over time. Additionally, we were able to examine data trends for 5-year 
 flood periods and understand the differences between these two locations.
 
-II.	Data and Methods.
+**II. Data and Methods.**
 
 Using RStudio, I imported discharge data from StreamStats, creating basic data frames to work from. Using functions from lubridate, I converted the date/time data to US/Eastern 
 for further data analysis in R. The discharge units also needed to be converted from CFS to cubic meters per second, which was achieved using dplyr with simple equations.
@@ -21,7 +21,7 @@ generate a graph representing mean flow and 10-year flood trends.
 
 Once all code was written and graphs generated, we proceeded to further examine the findings.
 
-III. Results and Discussion.
+**III. Results and Discussion.**
 
 Peak flow values differ greatly between Little Pine Creek and Allegheny River at Natrona. According to our data, most years at LPC had Q values around a mean of 10 cubic meters per second 
 (Figure 1). In comparison to Allegheny River at Natrona, this location had much more variation and consistently higher Q values, with the mean localizing around 2800 cubic meters 
@@ -52,21 +52,26 @@ significance are contained in the data table below.
 
 ![Figure 6. Mean Flow and 10-year Flood Values for Allegheny at Natrona.](mQ_and_10-flood_Allegheny.jpg)  
 
-IV. Conclusions.
+**IV. Conclusions.**
 
 The overall goal of this data project aimed to examine discharge data from two geographically different bodies of water, Little Pine Creek and the Allegheny River at Natrona. Here,
 we have determined trends in flood and flow data consistent with the historical status of these rivers. Additionally, our process of data analysis and utilizing R coding to achieve 
 these results presents a useful framework for analyzing flow data at other locations. Public data from StreamStats does contain some graphical presentations of data, but creating a
 concise workflow like that of this data project can greatly assist in understanding and presentation.
 
-V. Citations.
+**V. Citations.**
 
 [1]. https://streamstats.usgs.gov/ss/?information-portal=regionalInformation&region=PA
 
-[2]. Gore, J.A., Banning, J. Chapter 3 - Discharge Measurements and Streamflow Analysis, Methods in Stream Ecology, Volume 1 (Third Edition), Academic Press, 2017, Pages 49-70,
+[2]. Gleason, C. J., & Durand, M. T. (2020). Remote Sensing of River Discharge: A Review and a Framing for the Discipline. Remote Sensing, 12(7), 1107. https://doi.org/10.3390/rs12071107
+
+[3]. Gore, J.A., Banning, J. Chapter 3 - Discharge Measurements and Streamflow Analysis, Methods in Stream Ecology, Volume 1 (Third Edition), Academic Press, 2017, Pages 49-70,
 ISBN 9780124165588, https://doi.org/10.1016/B978-0-12-416558-8.00003-2.
 
-[3]. Gunawardana, Charitha and Walter McDonald. 2024. “Impacts of Land Use Changes on Discharge and Water Quality in Rivers and Streams: Case Study of the Continental United States.”
+[4]. Gunawardana, Charitha and Walter McDonald. 2024. “Impacts of Land Use Changes on Discharge and Water Quality in Rivers and Streams: Case Study of the Continental United States.”
 JAWRA Journal of the American Water Resources Association60 (3): 725–740. https://doi.org/10.1111/1752-1688.13198.
 
+[5]. Slater, L. J., Thirel, G., Harrigan, S., Delaigue, O., Hurley, A., Khouakhi, A., Prosdocimi, I., Vitolo, C., and Smith, K.: Using R in hydrology: a review of recent developments and 
+future directions, Hydrol. Earth Syst. Sci., 23, 2939–2963, https://doi.org/10.5194/hess-23-2939-2019, 2019.
 
+**Special thanks to Dr. Kahler for assistance in data analysis.**
