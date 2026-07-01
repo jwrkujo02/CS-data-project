@@ -41,10 +41,15 @@ significance are contained in the data table below.
 |Little Pine Creek |0.003   |0.038  |0.072 |
 
 ![Figure 1. Little Pine Creek Peak Flow (Q).]("PeakFlowQ_LPC.eps")
+
 ![Figure 2. Allegheny River at Natrona Peak Flow (Q).]("Peak Flow Q Allegheny.jpeg")
+
 ![Figure 3. Days over 5-year flood at LPC.]("LPC_5yearflood_days.eps")
+
 ![Figure 4. Days over 5-year flood at Allegheny Natrona.]("Days over 5YFV Natrona.jpeg")
+
 ![Figure 5. Mean Flow and 10-year Flood Values for LPC.]("mQ and 10yr Flood LPC.jpeg")
+
 ![Figure 6. Mean Flow and 10-year Flood Values for Allegheny at Natrona.]("mQ and 10-flood Allegheny.jpeg")
 
 IV. Conclusions.
@@ -54,7 +59,9 @@ we have determined trends in flood and flow data consistent with the historical 
 these results presents a useful framework for analyzing flow data at other locations. Public data from StreamStats does contain some graphical presentations of data, but creating a
 concise workflow like that of this data project can greatly assist in understanding and presentation.
 
-V. Citations
+V. Citations.
+
+[1]. https://streamstats.usgs.gov/ss/?information-portal=regionalInformation&region=PA
 
 
 
