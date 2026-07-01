@@ -4,7 +4,6 @@ library(dplyr)
 library(lubridate)
 library(ggplot2)
 library(doParallel)
-
 # install and load library hydrostats. specific for hydrology analysis
 install.packages("devtools")
 library(devtools)
@@ -55,133 +54,130 @@ stdev <- function(x, biascorr=TRUE) {
      return(stdev)
 }
 
-
-# load in flow data for little pine creek
-x <- read_table("little_pine_cr.txt", skip = 31, col_names = FALSE)
+# load in flow data for Allegheny River Natrona station
+x2 <- read_table("allegheny_natrona.txt", skip = 31, col_names = FALSE)
 
 # modify the timezone to US/Eastern and convert cfs to cubic meters per second
-y <- x %>%
+y2 <- x2 %>%
      mutate(dt = force_tz(ymd_hms(paste(X3, X4, X5)), tzone = "US/Eastern")) %>%
      mutate(Q = X6 * 0.0283168) %>% #convert cfs to m^3/s
      select(dt, Q)
 
 # figuring out the peak flows. this process can take a while depending on computer/connection
 
-y$hydroY <- NA
-for (i in 1:nrow(y)) {
-     y$hydroY[i] <- hy(y$dt[i])
+y2$hydroY <- NA
+for (i in 1:nrow(y2)) {
+     y2$hydroY[i] <- hy(y2$dt[i])
 }
 
 # parallelize the process.
 registerDoParallel(detectCores())
-z <- foreach (i = 1:nrow(y), .combine = 'rbind') %dopar% {
+z2 <- foreach (i = 1:nrow(y2), .combine = 'rbind') %dopar% {
      out <- array(NA, dim = 3)
-     out[1] <- y$dt[i]
-     out[2] <- y$Q[i]
-     out[3] <- hy(y$dt[i])
+     out[1] <- y2$dt[i]
+     out[2] <- y2$Q[i]
+     out[3] <- hy(y2$dt[i])
      return(out)
 }
 
-znew <- data.frame(z[,1], z[,3], z[,2]) %>%
-     mutate(dt = as_datetime(`z...1.`)) %>%
-     rename(hydroYear = `z...3.`, Q = `z...2.`) %>%
+znew2 <- data.frame(z2[,1], z2[,3], z2[,2]) %>%
+     mutate(dt = as_datetime(`z2...1.`)) %>%
+     rename(hydroYear = `z2...3.`, Q = `z2...2.`) %>%
      select(dt, hydroYear, Q)
 
 # create variable/data frame for peak flow each year
-peak <- znew %>%
+peak2 <- znew2 %>%
      group_by(hydroYear) %>%
      summarize(peakQ = max(Q))
 
 # log of peak flow
-peak <- peak %>%
+peak2 <- peak2 %>%
      mutate(LogPeak = log(peakQ, 10))
 
 # using log of peak flow, we can display/organize these data to evaluate in the context of floods
-#r <- 1:10
+r <- 1:10
+m <- mean(peak2$LogPeak)
+s <- stdev(peak2$LogPeak)
+c <- skew(peak2$LogPeak)
 
-#Example
-m <- mean(peak$LogPeak)
-s <- stdev(peak$LogPeak)
-c <- skew(peak$LogPeak)
-
-Fx <- 0.99 # Starting with f(x) = .99, the 1% or 100-year flood
+Fx <- 0.99 # Starting with f(x) = .99, the !% or 100-year flood
 tR <- 2 # return period
 Fx <- 1 - (1 / tR)
 
-p <- pt3(c, Fx)
-Qflood <- 10^(m + (s * p)) 
+p2 <- pt3(c, Fx)
+Qflood2 <- 10^(m + (s * p2)) 
+
+
 
 # use ggplot histogram tools to display this data
-ggplot(peak) + 
-     geom_histogram(binwidth = 10, color = 'black', fill = "blue", aes(x = peakQ)) +
-     geom_vline(xintercept = Qflood, color = "red") +
+ggplot(peak2) + 
+     geom_histogram(binwidth = 50, color = 'black', fill = "blue", aes(x = peakQ)) +
+     geom_vline(xintercept = Qflood2, color = "red") +
      geom_label(label=paste(tR, "year flood"), x=40, y=10) +
-     labs(title = "Peak Flow (Q) of Little Pine Creek", x = "Peak Flow (m^3/s)", 
+     labs(title = "Peak Flow (Q) of Allegheny at Natrona", x = "Peak Flow (m^3/s)", 
           y = "Number of Years")
 
+# now for more data. analyze flood level changes over ten year increments
+r <- 16:25
+m <- mean(peak2$LogPeak[r])
+s <- stdev(peak2$LogPeak[r])
+c <- skew(peak2$LogPeak[r])
+p2 <- pt3(c, Fx)
+Qflood2 <- 10^(m + (s * p2)) 
+print(peak2$hydroYear[r])
 
+# csv file for ten year increments
+f2 <- read_csv("flood10year.csv")
+m1_2 <- lm(flood10 ~ mid, data = f2)
+
+# This works >>>>>>>
 # analyzing days above the 5 year flood value. number of distinct floods over a value
-# days per year over a threshold
-ex <- znew %>%
+ex2 <- znew2 %>%
      mutate(da = as_date(dt)) %>%
      group_by(da) %>%
      summarize(Qday = max(Q, na.rm = TRUE), hy = floor(mean(hydroYear))) %>%
      group_by(hy) %>%
-     summarize(n_days = n(), daysOver5 = sum(Qday > Qflood))
+     summarize(n_days = n(), daysOver5 = sum(Qday > Qflood2))
 
-ggplot(ex, aes(hy, daysOver5)) +
+ggplot(ex2, aes(hy, daysOver5)) +
      geom_point(color = 'red') +
      ggtitle("Days Over 5-year Flood Value per year") +
      xlab("Hydrological Year") +
      ylab("Days Over 5-year Flood Value")
 
 
+# analysis of independent floods
+# number of independent floods over a certain level per year
 
-
-
-# now for more data. analyze flood level changes over ten year increments
-r <- 16:25
-m <- mean(peak$LogPeak[r])
-s <- stdev(peak$LogPeak[r])
-c <- skew(peak$LogPeak[r])
-p <- pt3(c, Fx)
-Qflood <- 10^(m + (s * p)) 
-print(peak$hydroYear[r])
-
-# csv file for ten year increments
-f <- read_csv("flood10year.csv")
-m1 <- lm(flood10 ~ mid, data = f)
-
-# Find decadal flood levels
-n <- floor(nrow(peak)/5) # determine number of starting points, every 5 years for 10 years
-beg <- array(NA, dim = n)
-end <- array(NA, dim = n)
-dur <- array(NA, dim = n)
-mQ <- array(NA, dim = n)
-md <- array(NA, dim = n)
-sd <- array(NA, dim = n)
-cd <- array(NA, dim = n)
-pd <- array(NA, dim = n)
-Qd <- array(NA, dim = n)
+# Find decadal flood levels 
+n2 <- floor(nrow(peak2)/5) # determine number of starting points, every 5 years for 10 years
+beg <- array(NA, dim = n2)
+end <- array(NA, dim = n2)
+dur <- array(NA, dim = n2)
+mQ <- array(NA, dim = n2)
+md <- array(NA, dim = n2)
+sd <- array(NA, dim = n2)
+cd <- array(NA, dim = n2)
+pd <- array(NA, dim = n2)
+Qd <- array(NA, dim = n2)
 Fxd <- 0.9 #test 10yr flood
 
-for (i in 1:n) {
+for (i in 1:n2) {
      beg[i] <- (5 * (i - 1)) + 1 # starting point in peak array
      end[i] <- beg + 9 # ending point
-     if (end[i] > nrow(peak)) {
-          end[i] <- nrow(peak) # to avoid going over
+     if (end[i] > nrow(peak2)) {
+          end[i] <- nrow(peak2) # to avoid going over
      }
      dur[i] <- end[i] - beg[i] + 1
-     dat <- peak$LogPeak[beg[i]:end[i]]
-     md[i] <- mean(dat)
-     mQ[i] <- mean(peak$peakQ[beg[i]:end[i]])
-     sd[i] <- stdev(dat)
-     cd[i] <- skew(dat)
+     dat2 <- peak2$LogPeak[beg[i]:end[i]]
+     md[i] <- mean(dat2)
+     mQ[i] <- mean(peak2$peakQ[beg[i]:end[i]])
+     sd[i] <- stdev(dat2)
+     cd[i] <- skew(dat2)
      pd[i] <- pt3(cd, Fxd)
      Qd[i] <- 10^(md[i] + (sd[i] * pd[i]))
 }
 
-floods <- data.frame(beg, end, dur, mQ, md, sd, cd, pd, Qd)
-
-# how should this data be displayed????
+floods2 <- data.frame(beg, end, dur, mQ, md, sd, cd, pd, Qd)
+ggplot(floods2, aes())
 
